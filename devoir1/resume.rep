@@ -1,0 +1,104 @@
+------------
+-- MACROS --
+------------
+
+PLUS(r1,r2) = r1+r2
+MULT(r1,r2) = r1*r2
+EXP(r1,r2) = r1**r2
+DEC(r1) = max{0,r1-1}
+MOINS(r1,r2) = max{0,r1-r2}
+EG(r1,r2) = r1 == r2
+FACT(r1) = r1!
+si r_i alors [<Bloc>]
+ET(r1,r2)
+NEG(r1)
+OU(r1,r2)
+XOR(r1,r2)
+XORCHAINE(r1,r2,r3) r3 longeur
+PG?(r1,r2) = (r1>r2)
+DIV(r1,r2) = r1//r2
+MOD(r1,r2) = r1 mode r2
+
+PREMIER?(r1) = r1 est un nombre premier?
+PREMIERSUIV(r1) = next primer > r1
+PREMIERK(r1) = r1 eme nombre premier
+
+TABLVAL(r1,r2) r1[r2]
+TABLASS(r1,r2,r3) r1[r2] = r3 
+
+FIB(r1) r1 eme nombre de Fibonacci 
+    FIB(0) = 1
+    FIB(1) = 2
+    FIB(2) = 3
+    ...
+TRI(r1,r2) = sort r1 de taille r2
+DIVISIBILITE(r1,r2)
+PGCD(r1,r2)
+PGCM(r1,r2)
+
+------------
+-- MACROS --
+------------
+
+
+------------
+--   1,1  --
+------------
+SOMME(r1,r2):
+    r0 <- MOINS(r0,r0)
+    r9 <- r2
+    repeter r2 fois[
+        r10 <- TABLVAL(r9)
+        r0 <- PLUS(r0,r10)
+        r9 <- DEC(r9)
+    ]
+
+
+------------
+--   1,2  --
+------------
+FRACTRAN(r1,r2,r3,r4):
+    ;;; r1 la liste des numérateurs
+    ;;; r2 la liste des dénominateurs
+    ;;; r3 la longeur du program 
+    ;;; (soit la taille de r1 et r2. 
+    ;;; Remarque : len(r1) = len(r2))
+    ;;; r4 entier de l'entrée
+
+
+    # pas besoin de deux registres
+    #
+
+    # r1000: indicator to show if we have obtained
+    # an integer. 0->fraction; 1->integer
+    # (set to 1 before entering while loop)
+    # r1001: 0
+    # r1111: 1
+    # r5: pointer indicating where we are in the list.
+    # r6: temporary variable 
+    # r7: register stocking (r4*numerator mod denominator)
+
+    r1000 <- inc(r1000)  
+    r1111 <- inc(r1111)  
+    r5 <- inc(r5)
+    tant que r1000 != r1001 faire[
+        r11 <- TABLVAL(r1,r5)
+        r12 <- TABLVAL(r2,r5)
+        r13 <- MULT(r4,r11)
+        r6 <- DIV(r13,r12)
+        r7 <- MOD(r13,r12)
+        r1000 <- PG?(r7,r1001)
+        si r1000 alors [
+            r5 <- inc(r5)
+            si PG?(r5,r3) alors[
+                r5 <- r1111                    # r5 = 1
+            ]
+            r4 <- r6
+        ]
+    ]
+
+    r0 <- r4
+    
+    
+
+

@@ -1,0 +1,119 @@
+
+
+\documentclass{article}
+
+%========================================
+\usepackage{tabularx, makecell, multirow }
+\usepackage{syntonly}
+\usepackage{hyperref}
+%utf8
+\usepackage[utf8]{inputenc}
+\usepackage[bottom]{footmisc}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[]{amsthm}
+%========================================
+
+%----------------- new commands ----------
+%            -{}-
+\newcommand{\ac}[1]{\left\{ #1 \right\}}
+
+\title{\textbf{IFT2105 Devoir2}}
+\author{
+    Samy Rasmy 20214818 \and Yuchen Hui 20150470}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+\section*{Avant tout}
+On va d'abord présenter sous forme de la logique propositionnell les deux lemmes du pompistes et respectivement leurs contraposées, car on prouvera nos conclusions en utilisant les deux contraposées.
+ 
+
+Premièrement, lemme du pompiste régulier:
+
+\begin{align*}
+&	L \in REG \implies \\
+&	\exists p \ge 1 ,\forall w \left( w \in L \right) \wedge \left(\left| w \right| \ge p \right) \exists x,y,z \in \Sigma^{*}\\
+&	\left [ \left( w=xyz \right) \wedge \left( \left| y \right| \ge 1 \right) \wedge \left(\left| xy \right| \le p\right) \wedge \left( \forall  i \ge 0, xy^{i}z \in L \right) \right] 
+\end{align*}
+et sa contreposée: 
+\begin{align*}
+&	\forall p \ge 1 ,\exists w \left( w \in L \right) \wedge \left(\left| w \right| \ge p \right) \forall x,y,z \in \Sigma^{*}\\
+&\left [ \left( w=xyz \right) \wedge \left( \left| y \right| \ge 1 \right) \wedge \left(\left| xy \right| \le p\right) \implies \left( \exists  i \ge 0, xy^{i}z \not\in L \right) \right] \\
+&	\implies L \not\in REG.
+\end{align*}
+
+Deuxièmement, lemme du pompiste HC:
+\begin{align*}
+&	L \in HC \implies \\
+&	\exists p \ge 1 ,\forall w \left( w \in L \right) \wedge \left(\left| w \right| \ge p \right) \exists u,v,x,y,z \in \Sigma^{*}\\
+&	\left [ \left( w=uvxyz \right) \wedge \left( \left| vy \right| \ge 1 \right) \wedge \left(\left| vxy \right| \le p\right) \wedge \left( \forall  i \ge 0, uv^{i}xy^{i}z \in L \right) \right] 
+\end{align*}
+et sa contreposée: 
+\begin{align*}
+&	\forall p \ge 1 ,\exists w \left( w \in L \right) \wedge \left(\left| w \right| \ge p \right) \forall u,v,x,y,z \in \Sigma^{*}\\
+&\left [ \left( w=uvxyz \right) \wedge \left( \left| vy \right| \ge 1 \right) \wedge \left(\left| vxy \right| \le p\right) \implies \left( \exists  i \ge 0, uv^{i}xy^{i}z \not\in L \right) \right] \\
+&	\implies L \not\in HC.
+\end{align*}
+\clearpage
+\section*{Question1}
+\textbf{Conclusion}: le langage est hors-context.\\
+\textbf{Grammaire}: $S\to SS\ |\ aSbSa\ |\ bSaSa\ |\ aSaSb\ |\ \epsilon$.\\
+Maintenant on prouve que le langage n'est pas régulier:
+\begin{proof}
+	Soit p un entier positif arbitraire, considérons le mot $w = a^{2p}b^{p} \in L$. On a bien que $ |w| = 3p > p$.
+	Soit $xyz = w$ une décomposition quelconque en trois partie de w. Supposons que les deux premières conditions du lemme tiennent, soient $|xy| \le  p$ et $|y| \ge  1$. Cherchons un entier positif $i$ tel que $xy^{i}z \not\in L$: Puisque $ |xy| \le p \text{ et } |y| \ge 1$, y ne contient que le symbole a, alors le mot $xy^{2}z$ prendra la forme $a^{2p+ |y|}b^{p}$. On voit bien que $2p + |y| \neq 2\cdot p$, d'où le mot $xy^{2}z \not\in L$. D'après la contraposée du lemme du pompiste régulier, $L \not\in REG$.
+\end{proof}
+\section*{Question2}
+\textbf{Conclusion}: le langage n'est pas hors-context.\\
+\begin{proof}
+Soit p arbitraire et le mot $a^{p^{2}}b^{p}$.\\
+Soit une décomposition quelconque: $w = uvxyz$, dont $|vy| \ge 1.$ Cherchons des i tel que $uv^{i}xy^{i}z \not\in L.$\\
+Soit B le nombre de b dans vy, et A le nombre de a dans vy.\\
+Le nombre de a au total dans le mot pompé sera $p^{2}+Ai$. Celui de B sera $p+Bi$.\\ 
+La somme A+B ne peut pas etre 0. Au moins un de ces deux nombres sera donc plus grand ou egal a 1.\\
+Nous pouvons reecrire la regle de la grammaire de $|w|_{a} = \left( |w|_{b} \right)^{2}$ vers $p^{2} + Ai = p^2 + 2Bip + (Bi)^2$.\\
+Nous pouvons reecrire tel que:
+\[
+2Bip+(Bi)^2-Ai= 0
+.\] 
+p etant constant.\\
+\textbf{Si $A = 0$ et $B!=0$}, cela revient à $2Bip + \left( Bi \right)^{2} = 0 $.\\
+Ceci n'est pas possible pour tout i entier positif.\\
+\textbf{Si $B=0$ et $A!=0$}, cela revient à $Ai = 0$.\\
+Pour les memes raisons, ceci ne peut etre vrai pour tout i.\\
+\textbf{Si $B!=0$ et $A!=0$}, cela revient à $2Bp = A-B^2i$.\\
+Le coté droit étant une fonction strictement décroissante alors que le coté gauche est constant, ceci ne peut être vrai pour tout i.\\
+En conclusion, dans tours les cas on est capable de trouver un $i$ entier positif tel que $uv^{i}xy^{i}z \not\in L$.
+Donc, le language n'est pas hors contexte. 
+\end{proof}
+\section*{Question3}
+\textbf{Conclusion}: le langage est hors-context.\\
+\textbf{Grammaire}:
+\begin{align*}
+	S &\to aSc\ |\ BC\\
+	BC&\to bBCc\ |\ \epsilon
+.\end{align*}
+Maintenant on prouve que le langage n'est pas régulier:
+\begin{proof}
+	Soit p un entier positif arbitraire, considérons le mot $w = a^{p}b^{p}c^{2p} \in L$. On a bien que $ |w| = 4p > p$.
+	Soit $xyz = w$ une décomposition quelconque en trois partie de w. Supposons que les deux premières conditions du lemme tiennent, soient $|xy| \le  p$ et $|y| \ge  1$. Cherchons un entier positif $i$ tel que $xy^{i}z \not\in L$: Puisque $ |xy| \le p \text{ et } |y| \ge 1$, $y$ ne contient que des symboles a, alors le mot $xy^{2}z$ prendra la forme $a^{p+ |y|}b^{p}c^{2p}$. On voit bien que $|w|_{a}+|w|_{b} = (p + |y|) + p = 2p + |y|\neq 2p =  |w|_{c}$, d'où le mot $xy^{2}z \not\in L$. D'après la contraposée du lemme du pompiste régulier, $L \not\in REG$.
+\end{proof}
+\section*{Question4}
+\textbf{Conclusion}: Le langage est hors-context.\\
+\textbf{Grammaire}:
+\begin{align*}
+	S &\to aSc\ |\ B\\
+	B&\to bB\ |\ \epsilon
+.\end{align*}
+Maintenant on prouve que le langage n'est pas régulier:
+\begin{proof}
+	Soit p un entier positif arbitraire, considérons le mot $w = a^{p}b^{p}c^{p} \in L$. On a bien que $ |w| = 3p > p$.
+	Soit $xyz = w$ une décomposition quelconque en trois partie de w. Supposons que les deux premières conditions du lemme tiennent, soient $|xy| \le  p$ et $|y| \ge  1$. Cherchons un entier positif $i$ tel que $xy^{i}z \not\in L$: Puisque $ |xy| \le p \text{ et } |y| \ge 1$, $y$ ne contient que des symboles a, alors le mot $xy^{2}z$ prendra la forme $a^{p+ |y|}b^{p}c^{p}$. On voit bien que $|w|_{a} = (p + |y|) \neq p = |w|_{c}$, d'où le mot $xy^{2}z \not\in L$. D'après la contraposée du lemme du pompiste régulier, $L \not\in REG$.
+\end{proof}
+\section*{Question5}
+
+\end{document}
