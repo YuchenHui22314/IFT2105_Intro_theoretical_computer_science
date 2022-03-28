@@ -1,0 +1,116 @@
+\documentclass{article}
+
+%========================================
+\usepackage{tabularx, makecell, multirow }
+\usepackage{syntonly}
+% \usepackage{hyperref}
+%utf8
+\usepackage[utf8]{inputenc}
+\usepackage[bottom]{footmisc}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+
+
+%========================================
+
+%----------------- new command ----------%            -{}-
+\newcommand{\ac}[1]{\left\{ #1 \right\}}
+
+\title{\textbf{IFT2105 Devoir4}}
+\author{
+    Samy Rasmy 20214818 \and Yuchen Hui 20150470}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question1}
+On va montrer dans deux sens.
+\subsection*{$f$ est calculabe $\implies L_{f} \text{ est décidable}$ }
+\begin{proof}
+	On va prover par construire une machine de Turing $M$ qui décide $L_{f}$ tout en tirant avantage du fait qu'il existe une machine de Turing $M'$ qui, exécuté sur tout entrée $x \in \Sigma^{*}$, s'arrête avec $f\left( x \right) $ sur le ruban:\\
+M = `` Sur l'entrée <x,y>: 
+	\begin{enumerate}
+		\item Simuler $M'$ sur x. (NB $M'$ s'arrêtera sur tout entrée x dans Sigma étoile.)   
+		\item Comparer $f\left( x \right) $ calculée par $M'$ avec y. S'il sont égales, \textit{accepter}; Sinon \textit{rejeter}."
+	\end{enumerate}
+Ça se voit que  $M$ décide le langage $L_{f} = \left\{ \text{<}x,y\text{>}\ |\  y = f\left( x \right)  \right\} $.
+\end{proof}
+
+\subsection*{$L_{f} \text{ est décidable}$ $\implies f \text{ est calculable}$}
+\begin{proof}
+	Soit $M'$ la machine de Turing qui décide $L_{f}$, soit $s_1, s_2, s_3\ldots$ une liste de tous les mots possibles dans $\Sigma^{*}$ (dans un ordre quelconque). Construisons une machine de Turing M ci-dessous:\\
+M = `` Sur l'entrée x: 
+	\begin{enumerate}
+		\item Répéter les étapes ci-dessous pour $i = 1,2,3,\ldots$ 
+
+		\item \qquad Simuler $M'$ sur l'entrée <$x,s_{i}$>. 
+		\item \qquad Si $M'$ accepte, mettre $f\left( x \right) $ à la fin du ruban et mettre la tête sur le premier symbole du $f \left( x \right) $, puis \textit{accepter}, si $M'$ rejette, continuer avec la prochaine i."
+	\end{enumerate}
+On voit bien que $M$, exécuté sur tout entrée $x \in \Sigma^{*}$, s'arrête avec $f\left( x \right) $ sur le ruban.
+\end{proof}
+\section*{Question2}
+On va montrer dans deux sens.
+\begin{proof}
+	D'abord, on montre que s'il existe un énumérateur $E$ qui énumère langage $L$, il exsite une machine de Turing $M$ qui reconnait $L$. La définition de $M$ est donnée ci-dessous:\\
+M = `` Sur l'entrée $w$: 
+	\begin{enumerate}
+		\item Simuler $E$. Chaque fois que E imprime un mot, le comparer avec $w$. 
+
+		\item  Si $w = \text{cet mot imprimé}$, \textit{accepter}." 
+	\end{enumerate}
+	On voit bien que $M$ accepte tous les mots du language $L$.
+	
+	Considérons maintenant l'autre direction. Supposons qu'il existe une machine de Turing M qui reconnait le language L. Soit $s_1, s_2, s_3,\ldots$ une liste de tous les mots dans $\Sigma^{*}$ (d'un ordre quelconque), on va construire un énumérateur $E$ qui imprimera éventuellement chaque mot de $L$ et seulement les mots de $L$. 
+E = ``Sur toute entrée : 
+\begin{itemize}
+\setlength{\itemsep}{-0.5em}
+	\item[] \qquad$i = 0$ 
+	\item[]\qquad tant que $true$ :
+\item[] \qquad\qquad $i \gets i+1$ 
+\item[] \qquad\qquad pour tout k allant de $1\ldots i$ :
+\item[]\qquad\qquad\qquad $w \gets  \text{le $k^{ème}$ mot dans $\Sigma^{*}$ en ordre lexicographique }$ 
+\item[] \qquad\qquad\qquad Simuler M sur w pour i étapes
+\item[] \qquad\qquad\qquad si $M$ accepte $w$, imprimer le mot $w$."
+
+\end{itemize}
+Cet énumérateur imprimera éventuellement tous les mots dans le language $L$, car il ne va pas boucler infiniment sur des mots qui n'appartiennent pas au $L$.
+\end{proof}
+\section*{Question3}
+Considérons le langage $\overline{FINI_{TM}}$, soit $$\left\{ \text{<}M\text{>} \ |\ M \text{ une machine de Turing et L(M) infini}\right\}. $$ Si on arrive à prouver qu'il est indécidable, $FINI_{TM}$ est automitiquement indécidable. Soit la fonction de réduction du language $A_{MT}$ au langage $\overline{FINI_{MT}}$:
+\begin{align*}
+	f: \Sigma^{*} &\longrightarrow \Sigma^{*} \\
+	 \text{<}M,w\text{>}  &\longmapsto f\left( \text{<}M,w\text{>} \right)= \text{<}M'\text{>}
+,\end{align*}
+telle que
+$M'$ = ``Sur entrée x: 
+\begin{enumerate}
+\setlength{\itemsep}{-0.5em}
+\item  Simuler M sur w. S'il rejette, \textit{rejeter}. S'il accepte, aller à l'étape 2.
+\item Accepter n'importe quel entrée $x$. 
+\end{enumerate}
+On voit bien que
+\begin{align*}
+	<M,w> \notin  A_{TM} & \implies \text{M va rejeter w ou boucler infiniment sur w}\\
+			& \implies M' \text{rejettera x ou boucler infiniment sur x}\\
+			& \implies L(M') = \phi ,\text{qui n'est pas infini}\\
+			& \implies \text{<}M'\text{>} \not\in \overline{FINI_{MT}}
+.\end{align*}
+D'autre part,
+\begin{align*}
+	<M,w> \in  A_{TM} & \implies \text{M acceptera w}\\
+			& \implies M' \text{ acceptera n'importe quel x}\\
+			& \implies L(M') = \Sigma^{*} ,\text{qui est infini}\\
+			& \implies \text{<}M'\text{>} \in \overline{FINI_{MT}}
+.\end{align*}
+Puisque $A_{TM}$ est indécidable, on peut conclure que $\overline{FINI_{MT}}$ est indécidable. En conséquence, le language $FINI_{MT}$ est indécidable.
+
+
+\end{document}
+
