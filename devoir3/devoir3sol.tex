@@ -1,0 +1,97 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+%\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+%\pdfsuppresswarningpagegroup=1
+
+\begin{document}
+\section*{quetion2}
+\subsection*{2.1}
+complexite de nombre de combinason.$ n \choose \sum_{n=1}^{\infty} a_n z^n$
+\begin{itemize}
+	\item[] Pour chaque triplet de noeuds: // $\mathcal{O} \left ( (n,3) \right ) $
+	\item[]\qquad verifier si ce triplet Forme une 3-clique // $\mathcal{O} \left ( n \right ) $ 
+	\item[]\qquad Si oui: accepter
+	\item[]rejeter
+\end{itemize}
+Si w $\notin \text{3-clique} \implies M $ accepte
+Si w $\notin \text{3-clique} \implies M $ rejette
+M roule toujour en temps poly
+\subsection*{2.2}
+3-dsat $in$ NP. un certificat serait deux affectations des variables redant l'expression vraie. le verificateur V verifie que les deux affetation sont differents, $\mathcal{O} \left ( n \right ) $ et qu'elles rendent toutes deux l'expression vraies . Il verifie aussi que l'expression est en 3-FNC. $\implies$ V roule en tmeps polynomial et $\exists c t.q. V\left( E,c \right) $ accepte $\le\implies E \in 3-DSAT$
+
+\subsubsection*{reduction}
+soit f la fonction pour une expression E avec n variables, f(E) = E' avec E' = $E \wedge \left( x_{n+1},x_{n+2},x_{n+3}, \right) $.\\
+f est polynomiale et \\
+
+Si $E \in 3-sat \implies \exists $ une affectation $a_1,a_2,a_n$ des varaible $x_1,x_2,\ldots,x_{n}$ t.q. E(a1,a2,..,an) est vraie $\implies$ E(a1,a2,an,0,0,1) est vraie et E(a1,a2,an,0,1,0) est vraie. $\implies$ f(E) est dans 3-dsat.\\
+
+\begin{align*}
+	E'= f(e) \in  3-dsate &\implies \exists a_1, a_2\ldots a_{n+1} a_{n+2}, a_{n+3} \text{t.q.} E\left( a_1, a_2\ldots a_{n+1} a_{n+2}, a_{n+3} \right)   est vraie\\
+			      &\implies E(a_1,a_2,\ldots a_{n}) est vraie\\
+			      &\implies E \in 3-sat
+.\end{align*}
+
+\subsection*{2.3}
+V' = V $\cup \{w\}$ et E' = E $\cup \{\left( w,v \right) | v \in V\} $ (un nouveau noued)\\
+
+Si <G> $\in $ 3-col $\to  \exists  \text{un 3-coloriage}$ de G. En coloriant w avec une nouvelle couleur, on obtient un 4-coloriage de G' $\implies$ F(G) = G'  $\in $ 4-Col.\\
+
+Si G'$\in $ 4-COl $\implies \exists$  un 4-coloriage de G', Etant donne que w est connecte a tous les autre noeuds, sa coulerus doit etre differente. ceci implique que G est coloriable avec seulement 3 couleurs $\implies G \in 3-COL$
+\section*{question3}
+\begin{itemize}
+	\item [] sur entree E avec n variables $x_1,\ldots,x_{n}$ 
+	\item[] \qquad $E_0 \gets E$ 
+	\item[] Pour i allant de 1..n:
+	\item[] \qquad\qquad  $E' = $ same with my solution.
+\end{itemize}
+pour quoi pas 3-fnc!???????????????????????????????????
+\section*{question1}
+BONUS!1111111
+\section*{Contenu du TP autre que la correction de devoir(voir les photos...)}
+\begin{itemize}
+	\item On a  P $\subset NP$ et $NPC \subset NP$ 
+	\item Si P $\neq Np \implies P \cap  NPC = \phi$
+	\item si $P \neq NP, a_{n}b_{n}c_{n} \not\in NPC$ Si P = Np, $a_{n}b_{n}c_{n} \in NPC$
+	\item NP intermediaire
+	\item Si P = NP $P = NPC$? Non, mais presque. NPC = P- $\{\Sigma^{*}, \phi\} $.
+		
+\end{itemize}
+\begin{proof}
+	Soit L $\in  P - \{\Sigma^{*}, \phi\} $ $\implies \exists w_{a} \in L et \exists w_{r} \not\in L$.\\
+	On a que 3-sat $\in NPC \subset  NP = P$ \\
+	$\implies \exists machine turing m$ qui decide 3-sat en temps polynomial.\\
+	\begin{itemize}
+		\item sur entree E:
+		\item[] \qquad simule M sur E
+		\item[] \qquad si M accepte E:
+		\item[] \qquad\qquad ecrire $w_{a}$ sur le ruban
+		\item[] \qquad si M rejette E:
+		\item[] \qquad\qquad ecrire $w_{r} sur la ruban$
+	\end{itemize}
+	$\implies 3-sat \le^{p} L \implies L \in  NPC \implies P-\ldots \subset NPC$.\\
+	Montrons que NPC $\subset  P-\{\} $\\
+	On a NPC $\subset  NP = P$, on doit seulement montrea que $\Sigma \not\in  NPC et \phi \not\in NPC$. Si $\Sigma^{*} \in NPC $
+	
+\end{proof}
+
+\section{revision}
+
+
+\end{document}
